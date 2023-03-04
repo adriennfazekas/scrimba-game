@@ -14,7 +14,7 @@ characters = [
         diceScore: 4,
     }
 ]
-
+/*
 function render() {
     characters.forEach(function renderCharacter(character) {
         document.getElementById(character.elementId).innerHTML += `
@@ -28,3 +28,23 @@ function render() {
     })
 }
 render()
+*/
+
+const hero = characters[0]
+const monster = characters[1]
+
+function renderCharacter(data) {
+    const { elementId, name, avatar, health, diceScore } = data
+        document.getElementById(elementId).innerHTML =
+            `<div class="character-card">
+                <h4 class="name"> ${name} </h4>
+                <img class="avatar" src="${avatar}" />
+                <div class="health">health: <b> ${health} </b></div>
+                <div class="dice-container">
+                    <div class="dice"> ${diceScore} </div>
+                </div>
+            </div>`
+}
+
+renderCharacter(hero)
+renderCharacter(monster)
