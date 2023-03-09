@@ -14,6 +14,27 @@ characters = [
         diceCount: 1,
     }
 ]
+
+function Character(data) {
+    this.elementId = data.elementId
+    this.name = data.name
+    this.avatar = data.avatar
+    this.health = data.health
+    this.diceCount = data.diceCount
+    this.getCharacterHtml = function() {
+        const { elementId, name, avatar, health, diceCount } = this
+    
+        document.getElementById(elementId).innerHTML =
+            `<div class="character-card">
+                <h4 class="name"> ${name} </h4>
+                <img class="avatar" src="${avatar}" />
+                <div class="health">health: <b> ${health} </b></div>
+                <div class="dice-container">
+                    ${ getDiceHtml(diceCount) }
+                </div>
+            </div>`
+    }
+}
 /*
 function render() {
     characters.forEach(function renderCharacter(character) {
@@ -30,22 +51,11 @@ function render() {
 render()
 */
 
-const hero = characters[0]
-const monster = characters[1] 
+const hero = new Character(characters[0])
+hero.getCharacterHtml()
+const monster = new Character(characters[1])
+monster.getCharacterHtml()
 
-function renderCharacter(data) {
-    const { elementId, name, avatar, health, diceCount } = data
-    
-        document.getElementById(elementId).innerHTML =
-            `<div class="character-card">
-                <h4 class="name"> ${name} </h4>
-                <img class="avatar" src="${avatar}" />
-                <div class="health">health: <b> ${health} </b></div>
-                <div class="dice-container">
-                    ${ getDiceHtml(diceCount) }
-                </div>
-            </div>`
-}
 
 function getDiceHtml(diceCount) {
     return getDiceRollArray(diceCount).map(function(num) {
@@ -53,12 +63,9 @@ function getDiceHtml(diceCount) {
     }).join('')
 }
 
-function getDiceRollArray(num) {
-    const randomNumberArray = new Array(num).fill(0).map(function() {
+function getDiceRollArray(diceCount) {
+    const randomNumberArray = new Array(diceCount).fill(0).map(function() {
         return Math.floor(Math.random() * 6) +1
     })   
     return randomNumberArray 
 }
-
-renderCharacter(hero)
-renderCharacter(monster)
