@@ -16,25 +16,42 @@ characters = [
 ]
 
 function Character(data) {
-    this.elementId = data.elementId
-    this.name = data.name
-    this.avatar = data.avatar
-    this.health = data.health
-    this.diceCount = data.diceCount
+    Object.assign(this, data)
     this.getCharacterHtml = function() {
         const { elementId, name, avatar, health, diceCount } = this
     
-        document.getElementById(elementId).innerHTML =
-            `<div class="character-card">
+        return `<div class="character-card">
                 <h4 class="name"> ${name} </h4>
                 <img class="avatar" src="${avatar}" />
                 <div class="health">health: <b> ${health} </b></div>
                 <div class="dice-container">
-                    ${ getDiceHtml(diceCount) }
+                    ${ this.getDiceHtml(diceCount) }
                 </div>
             </div>`
     }
+    this.getDiceHtml = function(diceCount) {
+        return getDiceRollArray(diceCount).map(function(num) {
+            return `<div class="dice">${num}</div>`
+        }).join('')
+    }
 }
+
+const hero = new Character(characters[0])
+const monster = new Character(characters[1])
+render()
+
+function render() {
+    document.getElementById(hero.elementId).innerHTML = hero.getCharacterHtml()
+    document.getElementById(monster.elementId).innerHTML = monster.getCharacterHtml()
+}
+
+function getDiceRollArray(diceCount) {
+    const randomNumberArray = new Array(diceCount).fill(0).map(function() {
+        return Math.floor(Math.random() * 6) +1
+    })   
+    return randomNumberArray 
+}
+
 /*
 function render() {
     characters.forEach(function renderCharacter(character) {
@@ -50,22 +67,3 @@ function render() {
 }
 render()
 */
-
-const hero = new Character(characters[0])
-hero.getCharacterHtml()
-const monster = new Character(characters[1])
-monster.getCharacterHtml()
-
-
-function getDiceHtml(diceCount) {
-    return getDiceRollArray(diceCount).map(function(num) {
-        return `<div class="dice">${num}</div>`
-    }).join('')
-}
-
-function getDiceRollArray(diceCount) {
-    const randomNumberArray = new Array(diceCount).fill(0).map(function() {
-        return Math.floor(Math.random() * 6) +1
-    })   
-    return randomNumberArray 
-}
