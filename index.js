@@ -9,6 +9,19 @@ function render() {
     document.getElementById("hero").innerHTML = hero.getCharacterHtml()
     document.getElementById("monster").innerHTML = monster.getCharacterHtml()
 }
+function endGame() {
+    const endMessage = hero.health === 0 && monster.health === 0 ? "No victors - all creatures are dead"
+        : hero.health <= 0 ? "The Orc is Victorious"
+        : "The Wizard Wins"
+    const endEmoji = hero.health > 0 ? "🔮" : "☠️"
+
+    document.getElementById("main-section").innerHTML = 
+        `<div class="end-game">
+            <h2>Game Over</h2>
+            <h3>${endMessage}</h3>
+            <p class="end-emoji">${endEmoji}</p>
+        </div>` 
+}
 
 function attack() {
     hero.getDiceHtml()
@@ -16,6 +29,10 @@ function attack() {
     hero.takeDamage(monster.currentDiceScore)
     monster.takeDamage(hero.currentDiceScore)
     render()
+
+    if(hero.dead || monster.dead) {
+        endGame()
+    }
 }
 document.getElementById("attack-button").addEventListener("click", attack)
 

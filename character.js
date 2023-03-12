@@ -28,6 +28,10 @@ function Character(data) {
             return totalAttack + currentAttack
         })
         this.health -= totalAttackScore
+        if (this.health <= 0) {
+            this.health = 0
+            this.dead = true
+        }
     }
 }
 export default Character
