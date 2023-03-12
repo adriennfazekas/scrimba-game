@@ -5,3 +5,10 @@ export function getDiceRollArray(diceCount) {
     })   
     return randomNumberArray 
 }
+
+export function getDicePlaceholder(diceCount) {
+    const placeholderArray = new Array(diceCount).fill().map(function() {
+        return `<div class="placeholder-dice"></div>`
+    }).join('')
+    return placeholderArray
+}

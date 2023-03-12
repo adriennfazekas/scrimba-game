@@ -6,9 +6,20 @@ const monster = new Character(characters.monster)
 render()
 
 function render() {
-    document.getElementById(hero.elementId).innerHTML = hero.getCharacterHtml()
-    document.getElementById(monster.elementId).innerHTML = monster.getCharacterHtml()
+    document.getElementById("hero").innerHTML = hero.getCharacterHtml()
+    document.getElementById("monster").innerHTML = monster.getCharacterHtml()
 }
+
+function attack() {
+    render()
+}
+document.getElementById("attack-button").addEventListener("click", attack)
+
+
+
+
+
+
 
 /*
 function render() {
