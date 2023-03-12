@@ -11,6 +11,10 @@ function render() {
 }
 
 function attack() {
+    hero.getDiceHtml()
+    monster.getDiceHtml()
+    hero.takeDamage(monster.currentDiceScore)
+    monster.takeDamage(hero.currentDiceScore)
     render()
 }
 document.getElementById("attack-button").addEventListener("click", attack)
