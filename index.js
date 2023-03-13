@@ -9,6 +9,7 @@ function render() {
     document.getElementById("hero").innerHTML = hero.getCharacterHtml()
     document.getElementById("monster").innerHTML = monster.getCharacterHtml()
 }
+
 function endGame() {
     const endMessage = hero.health === 0 && monster.health === 0 ? "No victors - all creatures are dead"
         : hero.health <= 0 ? "The Orc is Victorious"

@@ -12,3 +12,7 @@ export function getDicePlaceholder(diceCount) {
     }).join('')
     return placeholderArray
 }
+
+export const getPercentage = (remainingHealth, maximumHealth) => {
+    return (100 * remainingHealth) / maximumHealth
+}
