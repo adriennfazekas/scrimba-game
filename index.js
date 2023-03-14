@@ -1,13 +1,11 @@
 import characters from "./data.js"
 import Character from "./character.js"
 
-const hero = new Character(characters.hero)
-const monster = new Character(characters.monster)
-render()
+let monsterArray = ["orc", "demon", "goblin"]
 
-function render() {
-    document.getElementById("hero").innerHTML = hero.getCharacterHtml()
-    document.getElementById("monster").innerHTML = monster.getCharacterHtml()
+function getNewMonster() {
+    const nextMonsterData = characters[monsterArray.shift()]
+    return nextMonsterData ? new Character(nextMonsterData) : {}
 }
 
 function endGame() {
@@ -29,32 +27,22 @@ function attack() {
     monster.getDiceHtml()
     hero.takeDamage(monster.currentDiceScore)
     monster.takeDamage(hero.currentDiceScore)
-    render()
+    render()   
 
-    if(hero.dead || monster.dead) {
+    if(monster.dead){
+        monster = getNewMonster()
+        render()
+    } else if ((monsterArray == 0) || hero.dead) {
         endGame()
     }
 }
 document.getElementById("attack-button").addEventListener("click", attack)
 
-
-
-
-
-
-
-/*
 function render() {
-    characters.forEach(function renderCharacter(character) {
-        document.getElementById(character.elementId).innerHTML += `
-            <div class="character-card">
-                <h4 class="name"> ${character.name} </h4>
-                <img class="avatar" src=${character.avatar}/>
-                <p class="health">health: <b> ${character.health} </b></p>
-                <div class="dice-container"><div class="dice"> ${character.diceScore} </div></div>
-            </div>
-        `
-    })
+    document.getElementById("hero").innerHTML = hero.getCharacterHtml()
+    document.getElementById("monster").innerHTML = monster.getCharacterHtml()
 }
+
+const hero = new Character(characters.hero)
+let monster = getNewMonster()
 render()
-*/
